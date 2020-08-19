@@ -15,6 +15,8 @@
 		FDE64A9C24EC84CF002F786A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDE64A9A24EC84CF002F786A /* LaunchScreen.storyboard */; };
 		FDE64AA724EC84D0002F786A /* BLEPeripheralTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE64AA624EC84D0002F786A /* BLEPeripheralTests.swift */; };
 		FDE64AB224EC84D0002F786A /* BLEPeripheralUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE64AB124EC84D0002F786A /* BLEPeripheralUITests.swift */; };
+		FDE64AC024EC8CE5002F786A /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE64ABF24EC8CE5002F786A /* UIView.swift */; };
+		FDE64AC224EC9FD8002F786A /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDE64AC124EC9FD8002F786A /* Data.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		FDE64AAD24EC84D0002F786A /* BLEPeripheralUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BLEPeripheralUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDE64AB124EC84D0002F786A /* BLEPeripheralUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEPeripheralUITests.swift; sourceTree = "<group>"; };
 		FDE64AB324EC84D0002F786A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FDE64ABF24EC8CE5002F786A /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		FDE64AC124EC9FD8002F786A /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,8 @@
 				FDE64A9824EC84CF002F786A /* Assets.xcassets */,
 				FDE64A9A24EC84CF002F786A /* LaunchScreen.storyboard */,
 				FDE64A9D24EC84CF002F786A /* Info.plist */,
+				FDE64ABF24EC8CE5002F786A /* UIView.swift */,
+				FDE64AC124EC9FD8002F786A /* Data.swift */,
 			);
 			path = BLEPeripheral;
 			sourceTree = "<group>";
@@ -259,6 +265,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDE64AC024EC8CE5002F786A /* UIView.swift in Sources */,
+				FDE64AC224EC9FD8002F786A /* Data.swift in Sources */,
 				FDE64A9424EC84CC002F786A /* ViewController.swift in Sources */,
 				FDE64A9024EC84CC002F786A /* AppDelegate.swift in Sources */,
 				FDE64A9224EC84CC002F786A /* SceneDelegate.swift in Sources */,

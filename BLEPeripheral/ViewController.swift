@@ -20,6 +20,14 @@ class ViewController: UIViewController {
         return label
     }()
 
+    private lazy var updateValueButton: UIButton = {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(updateValue), for: .touchUpInside)
+        button.setTitle("Update Value", for: .normal)
+        button.backgroundColor = .systemBlue
+        return button
+    }()
+
     private var peripheralManager: CBPeripheralManager!
 
     override func viewDidLoad() {
@@ -34,6 +42,7 @@ class ViewController: UIViewController {
 
     private func setupComponents() {
         view.addSubviewForAutoLayout(titleLabel)
+        view.addSubviewForAutoLayout(updateValueButton)
     }
 
     private func addConstraints() {
@@ -41,17 +50,24 @@ class ViewController: UIViewController {
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+
+        NSLayoutConstraint.activate([
+            updateValueButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            updateValueButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            updateValueButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
+            updateValueButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+
     }
 
     private let serviceUUID = CBUUID(string: "1DE118A8-2634-4BE3-9140-44BEA1259798")
-    private let value = "AD34E"
+
+    //Create characteristics
+    let char1 =  CBMutableCharacteristic(type: CBUUID(nsuuid: UUID()), properties: [.write], value: nil, permissions: [.writeable])
+
+    let char2 = CBMutableCharacteristic(type: CBUUID(nsuuid: UUID()), properties: [.notify], value: nil, permissions: [.readable])
 
     func addServices() {
-        let valueData =  value.data(using: .utf8)
-        //Create characteristics
-        let char1 =  CBMutableCharacteristic(type: CBUUID(nsuuid: UUID()), properties: [.notify, .write, .read], value: nil, permissions: [.readable, .writeable])
-
-        let char2 = CBMutableCharacteristic(type: CBUUID(nsuuid: UUID()), properties: [.read], value: valueData, permissions: [.readable])
 
         //Create Service
         let myService = CBMutableService(type: serviceUUID, primary: true)
@@ -69,6 +85,13 @@ class ViewController: UIViewController {
 
     func stopAdvertising() {
         peripheralManager.stopAdvertising()
+    }
+
+    @objc func updateValue() {
+        if let data = "123".data(using: .utf8) {
+            print(data.hexEncodedString())
+            peripheralManager.updateValue(data, for: char2, onSubscribedCentrals: nil)
+        }
     }
 
 }
@@ -107,8 +130,8 @@ extension ViewController: CBPeripheralManagerDelegate {
 
     func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveRead request: CBATTRequest) {
         print("didReceiveRead")
-        peripheral.respond(to: request, withResult: .success)
-        print("👓 \(value)")
+        request.value = "Hola".data(using: .utf8)
+            peripheralManager.respond(to: request, withResult: .success)
     }
 
     func peripheralManagerDidStartAdvertising(_ peripheral: CBPeripheralManager, error: Error?) {
@@ -117,6 +140,23 @@ extension ViewController: CBPeripheralManagerDelegate {
             return
         }
         print("Start Advertising Succeeded!")
+    }
+
+    func peripheralManager(_ peripheral: CBPeripheralManager, didAdd service: CBService, error: Error?) {
+        if let error = error {
+            print("error: \(error)")
+            return
+        }
+
+        print("service: \(service)")
+    }
+
+    func peripheralManager(_ peripheral: CBPeripheralManager, central: CBCentral, didSubscribeTo characteristic: CBCharacteristic) {
+        print("subscribed to: \( characteristic.uuid)")
+    }
+
+    func peripheralManager(_ peripheral: CBPeripheralManager, central: CBCentral, didUnsubscribeFrom characteristic: CBCharacteristic) {
+        print("unsubscribed to: \( characteristic.uuid)")
     }
 }
 
